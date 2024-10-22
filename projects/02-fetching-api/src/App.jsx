@@ -9,7 +9,7 @@ export function App () {
   const [image, setImage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const fetchCatFactAndImage = () => {
+  const fetchCatFact = () => {
     setLoading(true);
 
     fetch(CAT_ENDPOINT_RANDOM_FACT)
@@ -18,13 +18,9 @@ export function App () {
         const { fact } = data
         setFact(fact)
 
-        const firstWord = fact.split(' ', 1)
-        console.log(firstWord)
-
         const imageUrl = `${CAT_ENDPOINT_RANDOM_IMAGE}?${Math.random()}`
-
-
         const img = new Image(); // Crear un nuevo objeto de imagen
+
         img.src = imageUrl; // Establecer la URL de la imagen
         img.onload = () => {
           setImage(imageUrl); // Establecer la imagen cuando haya terminado de cargar
@@ -34,7 +30,7 @@ export function App () {
   }
 
   useEffect(() => {
-    fetchCatFactAndImage()
+    fetchCatFact()
   }, [])
 
   return (
@@ -46,7 +42,7 @@ export function App () {
       ) : (
         image && <img className="app-image" src={image} alt="Random cat"/>
       )}
-      <button className="app-button" onClick={fetchCatFactAndImage}>Get New Cat Fact</button>
+      <button className="app-button" onClick={fetchCatFact}>Get New Cat Fact</button>
     </main>
   )
 }
